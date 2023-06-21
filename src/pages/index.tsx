@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { Header } from "@/components/header";
 import { MessageList } from "@/components/message-list";
 import { NewMessageForm } from "@/components/new-message-form";
+import { SignIn } from "@/components/signin";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -26,24 +27,8 @@ export default function Home() {
           </div>
         </>
       ) : (
-        <div className="h-full flex items-center justify-center flex-col space-y-2.5">
-          {status === "loading" ? null : (
-            <>
-              <p className="text-lg md:text-2xl lg:text-3xl font-medium text-white">
-                Sign in with GitHub to join the chat!
-              </p>
-              <p>
-                <a
-                  href="https://grafbase.com?ref=chatbase"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-white/50 transition hover:text-[#4a9c6d]/100"
-                >
-                  Powered by Grafbase &amp; GraphQL Live Queries
-                </a>
-              </p>
-            </>
-          )}
+        <div className="h-full flex items-center justify-center flex-col">
+          {status === "loading" ? null : <SignIn />}
         </div>
       )}
     </div>

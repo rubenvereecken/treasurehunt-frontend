@@ -3,6 +3,12 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSound from "use-sound";
 
+import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
+const gravatarOptions: GravatarOptions = {
+  size: 50,
+  default: "robohash",
+}; // check below for all available options
+
 const AddNewMessageMutation = gql`
   mutation AddNewMessage($username: String!, $avatar: URL, $body: String!) {
     messageCreate(
@@ -31,8 +37,10 @@ export const NewMessageForm = () => {
         if (body) {
           addNewMessage({
             variables: {
-              username: session?.username ?? "",
-              avatar: session?.user?.image,
+              username: session?.username ?? session?.user.name,
+              avatar:
+                session?.user?.image ??
+                getGravatarUrl(session?.user.email!, gravatarOptions),
               body,
             },
           });
