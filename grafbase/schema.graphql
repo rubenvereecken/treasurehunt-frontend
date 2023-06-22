@@ -10,7 +10,14 @@ schema
 
 type Message @model {
   username: String!
-  avatar: URL
+  avatar: URL!
   body: String!
   likes: Int @default(value: 0)
+  room: Room!
+}
+
+type Room @model {
+  slug: String! @unique
+  name: String!
+  messages: [Message]
 }
