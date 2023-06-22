@@ -1,5 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import Gravatar, { GravatarOptions } from "react-awesome-gravatar";
 
 const options: GravatarOptions = {
@@ -18,7 +19,7 @@ export function Header() {
         <div className="flex justify-between items-center">
           <p className="inline-flex items-center space-x-3">
             <span className="text-white font-bold text-xl">
-              Treasure Hunt v1
+              <Link href="/"> Treasure Hunt v1</Link>
             </span>
           </p>
           {session ? (

@@ -2,6 +2,14 @@ import { formatRelative, formatDistance, differenceInHours } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
+// TODO generate these – the codegen template wasn't working for me
+export type RoomAndMessages = {
+  id: string;
+  slug: string;
+  name: string;
+  messages: Message[];
+};
+
 export type Message = {
   id: string;
   username: string;

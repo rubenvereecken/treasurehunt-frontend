@@ -4,15 +4,26 @@ import { useState } from "react";
 import useSound from "use-sound";
 
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
+import { useRoomAndMessages } from "@/lib/hooks";
 const gravatarOptions: GravatarOptions = {
   size: 50,
   default: "robohash",
 }; // check below for all available options
 
 const AddNewMessageMutation = gql`
-  mutation AddNewMessage($username: String!, $avatar: URL, $body: String!) {
+  mutation AddNewMessage(
+    $roomId: ID!
+    $username: String!
+    $avatar: URL!
+    $body: String!
+  ) {
     messageCreate(
-      input: { username: $username, avatar: $avatar, body: $body }
+      input: {
+        username: $username
+        avatar: $avatar
+        body: $body
+        room: { link: $roomId }
+      }
     ) {
       message {
         id
@@ -21,7 +32,7 @@ const AddNewMessageMutation = gql`
   }
 `;
 
-export const NewMessageForm = () => {
+export const NewMessageForm = ({ roomId }: { roomId: string }) => {
   const { data: session } = useSession();
   const [play] = useSound("sent.wav");
   const [body, setBody] = useState("");
@@ -37,6 +48,7 @@ export const NewMessageForm = () => {
         if (body) {
           addNewMessage({
             variables: {
+              roomId: roomId,
               username: session?.username ?? session?.user.name,
               avatar:
                 session?.user?.image ??
