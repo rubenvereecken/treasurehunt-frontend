@@ -10,7 +10,7 @@ export default function Home() {
   const { data: session, status } = useSession();
 
   return (
-    <div className="flex flex-col bg-cover">
+    <div className="h-full flex flex-col bg-cover">
       <div className="h-full flex items-center justify-center flex-col space-y-2.5">
         {session ? (
           <div className="flex items-center space-x-2.5">

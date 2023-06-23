@@ -40,19 +40,13 @@ export const Message = ({ message }: Props) => {
       >
         {message?.avatar && (
           <div className="w-12 h-12 overflow-hidden flex-shrink-0 rounded">
-            <a
-              href={`https://github.com/${message.username}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                width={50}
-                height={50}
-                src={message.avatar}
-                alt={message.username}
-                title={message.username}
-              />
-            </a>
+            <Image
+              width={50}
+              height={50}
+              src={message.avatar}
+              alt={message.username}
+              title={message.username}
+            />
           </div>
         )}
         <span

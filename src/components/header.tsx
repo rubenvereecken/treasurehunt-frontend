@@ -5,7 +5,7 @@ import Gravatar, { GravatarOptions } from "react-awesome-gravatar";
 
 const options: GravatarOptions = {
   size: 50,
-  default: "robohash",
+  default: "retro",
 }; // check below for all available options
 
 export function Header() {

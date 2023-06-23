@@ -13,8 +13,10 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <ApolloProviderWrapper>
-        <Header />
-        <Component {...pageProps} />
+        <div className="flex flex-col h-full">
+          <Header />
+          <Component {...pageProps} />
+        </div>
       </ApolloProviderWrapper>
     </SessionProvider>
   );

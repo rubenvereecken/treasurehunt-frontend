@@ -5,9 +5,10 @@ import useSound from "use-sound";
 
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
 import { useRoomAndMessages } from "@/lib/hooks";
+import botClient from "@/lib/bot-client";
 const gravatarOptions: GravatarOptions = {
   size: 50,
-  default: "robohash",
+  default: "retro",
 }; // check below for all available options
 
 const AddNewMessageMutation = gql`
@@ -40,21 +41,59 @@ export const NewMessageForm = ({ roomId }: { roomId: string }) => {
     onCompleted: () => play(),
   });
 
+  // This is client-sided. Probably not great to expose my GPT endpoint like this
+  // TODO once Grafbase refresh works, put this on an endpoint?
+  async function sendMessage({
+    roomId,
+    username,
+    avatar,
+    body,
+  }: {
+    roomId: string;
+    username: string;
+    avatar: string;
+    body: string;
+  }) {
+    addNewMessage({
+      variables: {
+        roomId,
+        username,
+        avatar,
+        body,
+      },
+    });
+
+    const res = await botClient.sendMessage({
+      message: body,
+      username,
+      roomId,
+      // TODO change
+      ismod: false,
+    });
+
+    addNewMessage({
+      variables: {
+        body: res.reply,
+        username: "Admin Bot",
+        roomId,
+        avatar: "https://robohash.org/blacklady",
+      },
+    });
+  }
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
 
         if (body) {
-          addNewMessage({
-            variables: {
-              roomId: roomId,
-              username: session?.username ?? session?.user.name,
-              avatar:
-                session?.user?.image ??
-                getGravatarUrl(session?.user.email!, gravatarOptions),
-              body,
-            },
+          sendMessage({
+            roomId: roomId,
+            username: session?.username ?? session?.user.name ?? "unknown",
+            avatar:
+              session?.user?.image ??
+              getGravatarUrl(session?.user.email!, gravatarOptions),
+            body,
           });
           setBody("");
         }

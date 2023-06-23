@@ -42,7 +42,7 @@ export default function Room() {
   const room = data!;
 
   return (
-    <div className="flex flex-col bg-cover">
+    <div className="flex flex-col bg-cover h-full">
       {session ? (
         <>
           <div className="flex-1 overflow-y-scroll no-scrollbar p-6">
