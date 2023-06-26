@@ -3,7 +3,7 @@ import axios from "axios";
 type BotMessage = {
   message: string;
   username: string;
-  roomId: string;
+  roomSlug: string;
   // TODO use this field
   ismod: boolean;
 };
@@ -13,8 +13,8 @@ type BotReply = {
 };
 
 class BotClient {
-  API_BASE_URL = "https://mn8ylu5hg8.execute-api.us-east-1.amazonaws.com";
-  //   API_BASE_URL = "http://localhost:3001";
+  //   API_BASE_URL = "https://mn8ylu5hg8.execute-api.us-east-1.amazonaws.com";
+  API_BASE_URL = "http://localhost:3001";
 
   async sendMessage(msg: BotMessage): Promise<BotReply> {
     const apiPath = "/huntgpt";

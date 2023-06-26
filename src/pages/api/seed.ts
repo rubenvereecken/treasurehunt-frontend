@@ -34,10 +34,11 @@ export default async function handler(
   }
 
   async function createRooms() {
-    return Promise.all([
+    const results = await Promise.allSettled([
       addNewRoom({ slug: "alpha", name: "Team Alpha" }),
       addNewRoom({ slug: "beta", name: "Team Beta" }),
     ]);
+    return results;
   }
 
   try {
