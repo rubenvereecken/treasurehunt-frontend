@@ -87,15 +87,14 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
 
   if (!data) return { loading, error, data: [] };
 
-  const messages: IMessage[] = (data.messageCollection.edges ?? []).map(
-    (edge) => JSON.parse(JSON.stringify(edge.node))
-  );
-  // .filter((msg) => msg.room.slug == roomSlug);
+  const messages: IMessage[] = (data.messageCollection.edges ?? [])
+    .map((edge) => JSON.parse(JSON.stringify(edge.node)))
+    .filter((msg) => msg.room.slug == roomSlug);
 
-  messages.map((msg) => {
-    /** @ts-ignore */
-    msg.room = { slug: "alpha", id: "test" };
-  });
+  // mVessages.map((msg) => {
+  //   /** @ts-ignore */
+  //   msg.room = { slug: "alpha", id: "test" };
+  // });
 
   return { loading, error, data: messages };
 }
