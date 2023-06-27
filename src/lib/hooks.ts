@@ -52,10 +52,10 @@ const GetRecentMessagesQuery = gql`
           body
           likes
           createdAt
-          #room {
-          #  slug
-          #  id
-          #}
+          room {
+            slug
+            id
+          }
         }
       }
     }
