@@ -88,7 +88,8 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
   if (!data) return { loading, error, data: [] };
 
   const messages: IMessage[] = (data.messageCollection.edges ?? [])
-    .map((edge) => JSON.parse(JSON.stringify(edge.node)))
+    // .map((edge) => JSON.parse(JSON.stringify(edge.node)))
+    .map((edge) => edge.node)
     .filter((msg) => msg.room.slug == roomSlug);
 
   // mVessages.map((msg) => {
