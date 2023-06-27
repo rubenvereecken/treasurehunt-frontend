@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { Message } from "@/components/message";
-import { useRoomAndMessages } from "@/lib/hooks";
+import { useMessages } from "@/lib/hooks";
 
 export const MessageList = ({ roomSlug }: { roomSlug: string }) => {
   const [scrollRef, inView, entry] = useInView({
@@ -11,18 +11,19 @@ export const MessageList = ({ roomSlug }: { roomSlug: string }) => {
     delay: 1000,
   });
 
-  const { loading, error, data } = useRoomAndMessages({
+  const {
+    loading,
+    error,
+    data: messages,
+  } = useMessages({
     roomSlug,
   });
-
-  const room = data;
-  const messages = room?.messages ?? [];
 
   useEffect(() => {
     if (entry?.target) {
       entry.target.scrollIntoView({ behavior: "smooth", block: "end" });
     }
-  }, [messages.length, entry?.target]);
+  }, [messages?.length ?? 0, entry?.target]);
 
   if (loading)
     return (

@@ -1,24 +1,60 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type {
-  Message as IMessage,
-  RoomAndMessages,
-} from "@/components/message";
+
+// Grafbase doesn't support live queries on relationships yet
+// const GetRecentMessagesQuery = gql`
+//   query GetRecentMessages($last: Int, $roomSlug: String) @live {
+//     room(by: { slug: $roomSlug }) {
+//       id
+//       slug
+//       name
+//       messages(last: $last) {
+//         edges {
+//           node {
+//             id
+//             username
+//             avatar
+//             body
+//             likes
+//             createdAt
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+
+export type IMessage = {
+  id: string;
+  username: string;
+  avatar?: string;
+  body: string;
+  createdAt: string;
+  room: {
+    id: string;
+    slug: string;
+  };
+};
+
+export type IRoom = {
+  id: string;
+  slug: string;
+  name: string;
+};
 
 const GetRecentMessagesQuery = gql`
-  query GetRecentMessages($last: Int, $roomSlug: String) @live {
-    room(by: { slug: $roomSlug }) {
-      id
-      slug
-      name
-      messages(last: $last) {
-        edges {
-          node {
+  query GetRecentMessages($last: Int) @live {
+    messageCollection(last: $last) {
+      edges {
+        node {
+          id
+          username
+          avatar
+          body
+          likes
+          createdAt
+          room {
+            slug
             id
-            username
-            avatar
-            body
-            likes
-            createdAt
           }
         }
       }
@@ -26,38 +62,52 @@ const GetRecentMessagesQuery = gql`
   }
 `;
 
-export function useRoomAndMessages({ roomSlug }: { roomSlug: string }): {
+const GetRoomQuery = gql`
+  query GetRoom($slug: String) @live {
+    room(by: { slug: $slug }) {
+      id
+      slug
+      name
+    }
+  }
+`;
+
+export function useMessages({ roomSlug }: { roomSlug: string }): {
   loading: boolean;
   error?: ApolloError;
-  data?: RoomAndMessages;
+  data: IMessage[];
 } {
   const { loading, error, data } = useQuery<{
-    room: {
-      id: string;
-      slug: string;
-      name: string;
-      messages: { edges: { node: IMessage }[] };
-    };
+    messageCollection: { edges: { node: IMessage }[] };
   }>(GetRecentMessagesQuery, {
     variables: {
       last: 100,
-      roomSlug: roomSlug,
     },
   });
 
-  if (!data || !data.room) return { loading, error, data: undefined };
+  if (!data) return { loading, error, data: [] };
 
-  const room = data.room;
-  const messages: IMessage[] = (room.messages.edges ?? []).map(
-    (edge) => edge.node
-  );
+  const messages: IMessage[] = (data.messageCollection.edges ?? [])
+    .map((edge) => edge.node)
+    .filter((msg) => msg.room.slug == roomSlug);
 
-  const out: RoomAndMessages = {
-    id: room.id,
-    slug: room.slug,
-    name: room.name,
-    messages,
-  };
+  return { loading, error, data: messages };
+}
 
-  return { loading, error, data: out };
+export function useRoom({ roomSlug }: { roomSlug: string }): {
+  loading: boolean;
+  error?: ApolloError;
+  data?: IRoom;
+} {
+  const { loading, error, data } = useQuery<{ room: IRoom }>(GetRoomQuery, {
+    variables: {
+      slug: roomSlug,
+    },
+  });
+
+  if (!data) return { loading, error, data: undefined };
+
+  const room: IRoom = data.room;
+
+  return { loading, error, data: room };
 }

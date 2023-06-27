@@ -4,7 +4,7 @@ import { useState } from "react";
 import useSound from "use-sound";
 
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
-import { useRoomAndMessages } from "@/lib/hooks";
+import { useMessages } from "@/lib/hooks";
 import botClient from "@/lib/bot-client";
 const gravatarOptions: GravatarOptions = {
   size: 50,
@@ -33,22 +33,20 @@ const AddNewMessageMutation = gql`
   }
 `;
 
-export const NewMessageForm = ({ roomSlug }: { roomSlug: string }) => {
+export const NewMessageForm = ({
+  roomSlug,
+  roomId,
+}: {
+  roomSlug: string;
+  roomId: string;
+}) => {
   const { data: session } = useSession();
   const [play] = useSound("sent.wav");
   const [body, setBody] = useState("");
-  const { loading, error, data } = useRoomAndMessages({
-    roomSlug: roomSlug,
-  });
   const [addNewMessage] = useMutation(AddNewMessageMutation, {
     onCompleted: () => play(),
   });
   const [isSending, setSending] = useState(false);
-
-  if (!data) return <></>;
-
-  const room = data;
-  const roomId = room.id;
 
   // This is client-sided. Probably not great to expose my GPT endpoint like this
   // TODO once Grafbase refresh works, put this on an endpoint?

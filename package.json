@@ -36,6 +36,7 @@
     "@types/jsonwebtoken": "9.0.2",
     "@types/react-gravatar": "^2.6.10",
     "autoprefixer": "10.4.14",
+    "grafbase": "^0.25.1",
     "postcss": "8.4.24",
     "tailwindcss": "3.3.2",
     "typescript": "^5.1.3"

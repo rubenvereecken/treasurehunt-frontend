@@ -16,6 +16,10 @@ export type Message = {
   avatar?: string;
   body: string;
   createdAt: string;
+  room: {
+    id: string;
+    slug: string;
+  };
 };
 
 interface Props {
