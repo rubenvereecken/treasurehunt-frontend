@@ -38,7 +38,8 @@ export default function Room() {
       </div>
     );
 
-  if (error)
+  if (error) {
+    console.error("error", error);
     return (
       <div className="flex items-center justify-center h-full">
         <p className="text-white">
@@ -46,6 +47,7 @@ export default function Room() {
         </p>
       </div>
     );
+  }
 
   if (!room)
     return (
