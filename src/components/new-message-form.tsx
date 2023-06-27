@@ -78,7 +78,7 @@ export const NewMessageForm = ({
 
     addNewMessage({
       variables: {
-        body: res.reply,
+        body: res.reply ?? " ",
         username: "Admin Bot",
         roomId,
         avatar: "https://robohash.org/blacklady",
