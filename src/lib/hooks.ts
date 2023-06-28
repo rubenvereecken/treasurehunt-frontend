@@ -92,7 +92,8 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
   const messages: IMessage[] = (data.messageCollection.edges ?? [])
     // .map((edge) => JSON.parse(JSON.stringify(edge.node)))
     .map((edge) => edge.node)
-    .filter((msg) => msg.room.slug == roomSlug);
+    // Still figuring out why sometimes room isn't defined
+    .filter((msg) => msg.room?.slug == roomSlug);
 
   console.log(messages);
 
