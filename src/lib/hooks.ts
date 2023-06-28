@@ -107,7 +107,7 @@ export function useRoom({ roomSlug }: { roomSlug: string }): {
 } {
   const { loading, error, data } = useQuery<{ room: IRoom }>(GetRoomQuery, {
     variables: {
-      slug: roomSlug,
+      slug: "testa",
     },
   });
 
