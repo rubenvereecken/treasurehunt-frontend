@@ -9,7 +9,6 @@ import { SignIn } from "@/components/signin";
 export default function Room() {
   const { data: session, status } = useSession();
   const router = useRouter();
-
   const roomSlug = router.query.room as string;
 
   const {
@@ -30,6 +29,15 @@ export default function Room() {
 
   const loading = msgLoading || roomLoading;
   const error = msgError ?? roomError;
+
+  if (!session)
+    return (
+      <div className="flex flex-col bg-cover h-full">
+        <div className="h-full flex items-center justify-center flex-col space-y-2.5">
+          {status === "loading" ? null : <SignIn />}
+        </div>
+      </div>
+    );
 
   if (loading)
     return (
