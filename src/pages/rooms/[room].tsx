@@ -17,7 +17,7 @@ export default function Room() {
     error: msgError,
     data: messages,
   } = useMessages({
-    roomSlug: roomSlug,
+    roomSlug,
   });
 
   const {
@@ -25,7 +25,7 @@ export default function Room() {
     error: roomError,
     data: room,
   } = useRoom({
-    roomSlug: roomSlug,
+    roomSlug,
   });
 
   const loading = msgLoading || roomLoading;

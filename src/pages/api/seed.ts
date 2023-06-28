@@ -35,8 +35,8 @@ export default async function handler(
 
   async function createRooms() {
     const results = await Promise.allSettled([
-      addNewRoom({ slug: "alpha", name: "Team Alpha" }),
-      addNewRoom({ slug: "beta", name: "Team Beta" }),
+      addNewRoom({ slug: "testa", name: "Test A" }),
+      addNewRoom({ slug: "testb", name: "Test B" }),
     ]);
     return results;
   }

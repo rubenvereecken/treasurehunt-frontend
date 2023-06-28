@@ -63,7 +63,7 @@ const GetRecentMessagesQuery = gql`
 `;
 
 const GetRoomQuery = gql`
-  query GetRoom($slug: String) @live {
+  query GetRoom($slug: String) {
     room(by: { slug: $slug }) {
       id
       slug
