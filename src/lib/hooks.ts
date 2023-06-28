@@ -87,10 +87,14 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
 
   if (!data) return { loading, error, data: [] };
 
+  console.log(data);
+
   const messages: IMessage[] = (data.messageCollection.edges ?? [])
     // .map((edge) => JSON.parse(JSON.stringify(edge.node)))
     .map((edge) => edge.node)
     .filter((msg) => msg.room.slug == roomSlug);
+
+  console.log(messages);
 
   // mVessages.map((msg) => {
   //   /** @ts-ignore */
@@ -107,7 +111,7 @@ export function useRoom({ roomSlug }: { roomSlug: string }): {
 } {
   const { loading, error, data } = useQuery<{ room: IRoom }>(GetRoomQuery, {
     variables: {
-      slug: "testa",
+      slug: roomSlug,
     },
   });
 
