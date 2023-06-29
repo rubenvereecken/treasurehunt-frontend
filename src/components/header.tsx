@@ -11,8 +11,6 @@ const options: GravatarOptions = {
 export function Header() {
   const { data: session } = useSession();
 
-  console.log(session);
-
   return (
     <header className="p-6 bg-white/5 border-b border-[#363739]">
       <div className="max-w-4xl mx-auto">

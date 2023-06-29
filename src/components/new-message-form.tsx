@@ -59,7 +59,20 @@ export const NewMessageForm = ({
     avatar: string;
     body: string;
   }) {
-    addNewMessage({
+    // const response = await fetch("http://localhost:3000/api/message", {
+    //   method: "POST",
+    //   headers: {
+    //     // Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ roomId, username, avatar, body }),
+    // });
+
+    // console.log(response);
+
+    // return;
+
+    const userMessagePromise = addNewMessage({
       variables: {
         roomId,
         username,
@@ -68,40 +81,48 @@ export const NewMessageForm = ({
       },
     });
 
-    const res = await botClient.sendMessage({
-      message: body,
-      username,
-      roomSlug,
-      // TODO change
-      ismod: false,
-    });
+    const botMessagePromise = botClient
+      .sendMessage({
+        message: body,
+        username,
+        roomSlug,
+        // TODO change
+        ismod: false,
+      })
+      .then(async (res) => {
+        return addNewMessage({
+          variables: {
+            body: res.reply ?? " ",
+            username: "Admin Bot",
+            roomId,
+            avatar: "https://robohash.org/blacklady",
+          },
+        });
+      });
 
-    addNewMessage({
-      variables: {
-        body: res.reply ?? " ",
-        username: "Admin Bot",
-        roomId,
-        avatar: "https://robohash.org/blacklady",
-      },
-    });
+    return Promise.allSettled([userMessagePromise, botMessagePromise]);
   }
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
 
         setSending(true);
 
         if (body) {
-          sendMessage({
-            username: session?.username ?? session?.user.name ?? "unknown",
-            avatar:
-              session?.user?.image ??
-              getGravatarUrl(session?.user.email!, gravatarOptions),
-            body,
-          }).finally(() => setSending(false));
           setBody("");
+          try {
+            await sendMessage({
+              username: session?.username ?? session?.user.name ?? "unknown",
+              avatar:
+                session?.user?.image ??
+                getGravatarUrl(session?.user.email!, gravatarOptions),
+              body,
+            });
+          } finally {
+            setSending(false);
+          }
         }
       }}
       className="flex items-center space-x-3"

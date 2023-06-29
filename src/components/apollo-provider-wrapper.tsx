@@ -23,8 +23,6 @@ const sseLink = new SSELink({
 export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
   const client = useMemo(() => {
     const authMiddleware = setContext(async (_, { headers }) => {
-      console.log("headers");
-      console.log(headers);
       const { token } = await fetch("/api/auth/token").then((res) =>
         res.json()
       );
