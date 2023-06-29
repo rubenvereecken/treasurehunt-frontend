@@ -5,6 +5,7 @@ import { getApolloClient } from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 
 import { authOptions } from "./auth/[...nextauth]";
+import botClient from "@/lib/bot-client";
 
 const secret = process.env.NEXTAUTH_SECRET;
 
@@ -47,9 +48,7 @@ export default async function handler(
     return results;
   }
 
-  const { roomId, username, avatar, body } = req.body;
-
-  console.log(req.body);
+  const { roomId, roomSlug, username, avatar, body } = req.body;
 
   const result = await addNewMessage({
     roomId,
@@ -58,5 +57,41 @@ export default async function handler(
     body,
   });
 
-  res.json({ result });
+  const userMessagePromise = addNewMessage({
+    variables: {
+      roomId,
+      username,
+      avatar,
+      body,
+    },
+  });
+
+  let botReply = " ";
+
+  const botMessagePromise = botClient
+    .sendMessage({
+      message: body,
+      username,
+      roomSlug,
+      // TODO change
+      ismod: false,
+    })
+    .then(async (res) => {
+      botReply = res.reply ?? " ";
+      return addNewMessage({
+        variables: {
+          body: botReply,
+          username: "Admin Bot",
+          roomId,
+          avatar: "https://robohash.org/blacklady",
+        },
+      });
+    });
+
+  const results = await Promise.allSettled([
+    userMessagePromise,
+    botMessagePromise,
+  ]);
+
+  res.json(botReply);
 }

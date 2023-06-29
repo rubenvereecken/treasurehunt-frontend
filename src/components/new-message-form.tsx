@@ -65,7 +65,7 @@ export const NewMessageForm = ({
         // Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ roomId, username, avatar, body }),
+      body: JSON.stringify({ roomId, roomSlug, username, avatar, body }),
     });
 
     console.log(response);
