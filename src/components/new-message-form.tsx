@@ -59,7 +59,9 @@ export const NewMessageForm = ({
     avatar: string;
     body: string;
   }) {
-    const response = await fetch("https://ruben30.com/api/message", {
+    // const BASE_URL = "http://localhost:3000";
+    const BASE_URL = "https://ruben30.com";
+    const response = await fetch(BASE_URL + "/api/message", {
       method: "POST",
       headers: {
         // Authorization: `Bearer ${token}`,

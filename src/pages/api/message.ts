@@ -50,20 +50,11 @@ export default async function handler(
 
   const { roomId, roomSlug, username, avatar, body } = req.body;
 
-  const result = await addNewMessage({
+  const userMessagePromise = addNewMessage({
     roomId,
     username,
     avatar,
     body,
-  });
-
-  const userMessagePromise = addNewMessage({
-    variables: {
-      roomId,
-      username,
-      avatar,
-      body,
-    },
   });
 
   let botReply = " ";
@@ -79,12 +70,10 @@ export default async function handler(
     .then(async (res) => {
       botReply = res.reply ?? " ";
       return addNewMessage({
-        variables: {
-          body: botReply,
-          username: "Admin Bot",
-          roomId,
-          avatar: "https://robohash.org/blacklady",
-        },
+        roomId,
+        body: botReply,
+        username: "Admin Bot",
+        avatar: "https://robohash.org/blacklady",
       });
     });
 
@@ -92,6 +81,8 @@ export default async function handler(
     userMessagePromise,
     botMessagePromise,
   ]);
+
+  console.log(results);
 
   res.json(botReply);
 }
