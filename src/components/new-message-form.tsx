@@ -59,18 +59,18 @@ export const NewMessageForm = ({
     avatar: string;
     body: string;
   }) {
-    // const response = await fetch("http://localhost:3000/api/message", {
-    //   method: "POST",
-    //   headers: {
-    //     // Authorization: `Bearer ${token}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ roomId, username, avatar, body }),
-    // });
+    const response = await fetch("https://ruben30.com/api/message", {
+      method: "POST",
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ roomId, username, avatar, body }),
+    });
 
-    // console.log(response);
+    console.log(response);
 
-    // return;
+    return;
 
     const userMessagePromise = addNewMessage({
       variables: {
