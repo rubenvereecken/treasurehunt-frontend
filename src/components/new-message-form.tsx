@@ -6,6 +6,7 @@ import useSound from "use-sound";
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
 import { useMessages } from "@/lib/hooks";
 import botClient from "@/lib/bot-client";
+import apiClient from "@/lib/api-client";
 const gravatarOptions: GravatarOptions = {
   size: 50,
   default: "retro",
@@ -59,18 +60,7 @@ export const NewMessageForm = ({
     avatar: string;
     body: string;
   }) {
-    // const BASE_URL = "http://localhost:3000";
-    const BASE_URL = "https://ruben30.com";
-    const response = await fetch(BASE_URL + "/api/message", {
-      method: "POST",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ roomId, roomSlug, username, avatar, body }),
-    });
-
-    console.log(response);
+    await apiClient.sendMessage({ roomId, roomSlug, username, avatar, body });
 
     return;
 
