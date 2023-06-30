@@ -15,9 +15,6 @@ type BotReply = {
 const isLambda = !!process.env.LAMBDA_TASK_ROOT;
 
 class BotClient {
-  //   API_BASE_URL = "https://mn8ylu5hg8.execute-api.us-east-1.amazonaws.com";
-  API_BASE_URL = "http://localhost:3001";
-
   get API_BASE_URL() {
     if (isLambda)
       return "https://mn8ylu5hg8.execute-api.us-east-1.amazonaws.com";
