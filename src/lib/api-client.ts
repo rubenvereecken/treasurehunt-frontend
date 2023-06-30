@@ -6,7 +6,9 @@ type ApiMessage = {
   body: string;
 };
 
-const isVercel = !!process.env.VERCEL_ENV;
+const isVercel = !!(
+  process.env.VERCEL_ENV ?? process.env.NEXT_PUBLIC_VERCEL_ENV
+);
 
 class ApiClient {
   get API_BASE_URL() {

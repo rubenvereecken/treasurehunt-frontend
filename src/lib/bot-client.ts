@@ -12,7 +12,9 @@ type BotReply = {
   reply: string;
 };
 
-const isVercel = !!process.env.VERCEL_ENV;
+const isVercel = !!(
+  process.env.VERCEL_ENV ?? process.env.NEXT_PUBLIC_VERCEL_ENV
+);
 
 class BotClient {
   get API_BASE_URL() {
