@@ -12,11 +12,11 @@ type BotReply = {
   reply: string;
 };
 
-const isLambda = !!process.env.LAMBDA_TASK_ROOT;
+const isVercel = !!process.env.VERCEL_ENV;
 
 class BotClient {
   get API_BASE_URL() {
-    if (isLambda)
+    if (isVercel)
       return "https://mn8ylu5hg8.execute-api.us-east-1.amazonaws.com";
     return "http://localhost:3001";
   }
