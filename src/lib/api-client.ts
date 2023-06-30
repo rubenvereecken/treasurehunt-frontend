@@ -6,11 +6,11 @@ type ApiMessage = {
   body: string;
 };
 
-const isLambda = !!process.env.LAMBDA_TASK_ROOT;
+const isVercel = !!process.env.VERCEL;
 
 class ApiClient {
   get API_BASE_URL() {
-    if (isLambda) return "https://ruben30.com";
+    if (isVercel) return "https://ruben30.com";
     return "http://localhost:3001";
   }
 
