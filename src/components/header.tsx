@@ -17,7 +17,7 @@ export function Header() {
         <div className="flex justify-between items-center">
           <p className="inline-flex items-center space-x-3">
             <span className="text-white font-bold text-xl">
-              <Link href="/"> Treasure Hunt v1</Link>
+              <Link href="/">{"R&V's Treasure Hunt"}</Link>
             </span>
           </p>
           {session ? (
