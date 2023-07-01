@@ -27,7 +27,6 @@ class BotClient {
     const apiPath = "/huntgpt";
 
     const res = await axios.post(this.API_BASE_URL + apiPath, msg);
-
     return res.data;
   }
 }
