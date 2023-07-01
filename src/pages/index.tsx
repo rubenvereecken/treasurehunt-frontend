@@ -14,12 +14,12 @@ export default function Home() {
       <div className="h-full flex items-center justify-center flex-col space-y-2.5">
         {session ? (
           <div className="flex items-center space-x-5">
-            <Link href="/rooms/test1">
+            <Link href="/rooms/blue">
               <button className="bg-white/5 rounded h-12 px-6 font-medium text-white text-lg border border-transparent inline-flex items-center">
                 Hooks
               </button>
             </Link>
-            <Link href="/rooms/test2">
+            <Link href="/rooms/red">
               <button className="bg-white/5 rounded h-12 px-6 font-medium text-white text-lg border border-transparent inline-flex items-center">
                 Sparrows
               </button>
