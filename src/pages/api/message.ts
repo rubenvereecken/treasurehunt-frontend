@@ -69,6 +69,7 @@ export default async function handler(
     })
     .then(async (res) => {
       botReply = res.reply ?? " ";
+      // This sometimes takes over 10s on Vercel, at which point it gets cut off
       return addNewMessage({
         roomId,
         body: botReply,
