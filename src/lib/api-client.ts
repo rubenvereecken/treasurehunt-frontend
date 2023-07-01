@@ -13,7 +13,7 @@ const isVercel = !!(
 class ApiClient {
   get API_BASE_URL() {
     if (isVercel) return "https://ruben30.com";
-    return "http://localhost:3001";
+    return "http://localhost:3000";
   }
 
   async sendMessage(msg: ApiMessage): Promise<any> {
