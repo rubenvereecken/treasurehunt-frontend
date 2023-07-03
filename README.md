@@ -4,7 +4,7 @@ Chat room app for a Treasure Hunt I organised, based on [a Grafbase tutorial](ht
 
 AI Admin Bot, written on top of GPT 3.5, lives [here](https://github.com/rubenvereecken/treasurehunt-gpt).
 
-![Screenshot 1](/public/screen1.png) ![Screenshot 2](/public/screen2.png)
+<img src="public/screen1.png" alt="Screenshot 1" width="350" /> <img src="public/screen2.png" alt="Screenshot 2" width="350" />
 
 ## Tools used
 
