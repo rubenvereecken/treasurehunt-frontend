@@ -81,13 +81,13 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
     messageCollection: { edges: { node: IMessage }[] };
   }>(GetRecentMessagesQuery, {
     variables: {
-      last: 100,
+      last: 200,
     },
   });
 
   if (!data) return { loading, error, data: [] };
 
-  console.log(data);
+  // console.log(data);
 
   const messages: IMessage[] = (data.messageCollection.edges ?? [])
     // .map((edge) => JSON.parse(JSON.stringify(edge.node)))
@@ -95,7 +95,7 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
     // Still figuring out why sometimes room isn't defined
     .filter((msg) => msg.room?.slug == roomSlug);
 
-  console.log(messages);
+  // console.log(messages);
 
   // mVessages.map((msg) => {
   //   /** @ts-ignore */
