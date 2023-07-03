@@ -81,7 +81,7 @@ export function useMessages({ roomSlug }: { roomSlug: string }): {
     messageCollection: { edges: { node: IMessage }[] };
   }>(GetRecentMessagesQuery, {
     variables: {
-      last: 200,
+      last: 100,
     },
   });
 
